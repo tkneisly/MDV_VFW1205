@@ -1,6 +1,6 @@
 // Week 2, Project 2
 // David Tyler Kneisly
-// VFW 1204
+// VFW 1205
 // Book Tracker
 
 // Wait until the DOM is ready
@@ -33,8 +33,8 @@ window.addEventListener('DOMContentLoaded', function() {
     // Find value of selected radio button.
     function getSelectedRadio() {
         var radios = document.form[0].genre;
-        for(var i=0; i < radios.length; i++) {
-            if(radios[i].checked) {
+        for (var i=0; i < radios.length; i++) {
+            if (radios[i].checked) {
                 genreValue = radios[i].value;    
             }
         }
@@ -48,6 +48,26 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function toggleControls(n) {
+        switch(n) {
+            case "on":
+                $("form").style.display = "none";
+                $("clear").style.display = "inline";
+                $("displayLink").style.display = "none";
+                $("addNew").style.display = "inline";
+                break;
+            case "off":
+                $("form").style.display = "block";
+                $("clear").style.display = "inline";
+                $("addNew").style.display = "none";
+                $("items").style.display = "none";
+                break;
+            default:
+                return false;
+        }
+    }
+
+
     function storeData() {
         var id = Math.floor(Math.random()*100000001);
         // Gather up all our form field values and store in an object.
@@ -55,18 +75,58 @@ window.addEventListener('DOMContentLoaded', function() {
         getSelectedRadio();
         getCheckboxValue();
         var item = {};
-        item.group = ["Group:", $('groups').value];
-        item.booktitle = ["Title:", $('booktitle').value];
-        item.author = ["Author:", $('author').value];
-        item.pages = ["Pages:", $('pages').value];
-        item.readdate = ["Date Finished:", $('readdate').value];
-        item.rateit = ["Rating:", $('rateit').value];
-        item.genre = ["Genre:", genreValue];
-        item.favorite = ["Favorite:", favoriteValue];
-        item.notes = ["Notes:", $('notes').value];
+        item.grouping = ["Group:", $('select').value];
+        item.titles = ["Title:", $('booktitle').value];
+        item.authors = ["Author:", $('author').value];
+        item.readpages = ["Pages:", $('pages').value];
+        item.datefinished = ["Date Finished:", $('readdate').value];
+        item.rating = ["Rating:", $('rateit').value];
+        item.category = ["Genre:", genreValue];
+        item.favs = ["Favorite:", favoriteValue];
+        item.note = ["Notes:", $('notes').value];
         // Save data into Local Storage: Use Stringify to convert our object to a string.
         localStorage.setItem(id, JSON.stringify(item));
         alert("Book is saved!");
+    }
+
+    function showData() {
+        toggleControls("on");
+        if (localStorage.length === 0) {
+            alert("No saved books!");
+        } else {
+        var makeDiv = document.createElement('div');
+        makeDiv.setAttribute('id','items');
+        var makeList = document.createElement('ul');
+        makeDiv.appendChild(makeList);
+        document.body.appendChild(makeDiv);
+        $('item').style.display = 'display';
+        for (var i=0, l = localStorage.length; i<l; i++) {
+            var makeLi = document.createElement('li');
+            makeList.appendChild(makeLi);
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            var obj = JSON.parse(value);
+            var makeSubList = document.createElement('ul');
+            makeLi.appendChild(makeSubList);
+            for (var n in obj) {
+                var makeSubLi = document.createElement("li");
+                makeSubList.appendChild(makeSubLi);
+                var optSubText = obj[n][0]+" "+obj[n][1];
+                makeSubLi.innerHTML = optSubText;
+            }
+        }
+        }
+    }
+
+    function clearData() {
+        if(localStorage.length === 0) {
+            alert("No books to clear!");
+        } else {
+            localStorage.clear();
+            alert("All books deleted!");
+            window.location.reload();
+            return false;
+        }
     }
     
     // Variable defaults
@@ -76,15 +136,12 @@ window.addEventListener('DOMContentLoaded', function() {
     ;
     makeCats();
 
-    // Set link & Submit Click Events
-    /*
-    var displayLink = $('display');
-    displayLink.addEventListener('click', getData);
-    var clearLink = $('clear');
-    clearLink.addEventListener('click', clearLocal);
-    */
-    var saveLink = $('submit');
-    saveLink.addEventListener('click', storeData);
+    var saveBook = $('submit');
+    saveBook.addEventListener('click', storeData);
+    var displayBooks = $("display");
+    displayBooks.addEventListener("click", showData);
+    var clearBooks = $("clear");
+    clearBooks.addEventListener("click", clearData);
     
 
 } );
