@@ -32,7 +32,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     // Find value of selected radio button.
     function getSelectedRadio() {
-        var radios = document.form[0].genre;
+        var radios = document.forms[0].genre;
         for (var i=0; i < radios.length; i++) {
             if (radios[i].checked) {
                 genreValue = radios[i].value;    
@@ -40,6 +40,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Find value of selected checkboxes
     function getCheckboxValue() {
         if ($('favorite').checked){
             favoriteValue = $('favorite').value;
@@ -48,76 +49,83 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    //Toggle controls
     function toggleControls(n) {
         switch(n) {
             case "on":
-                $("form").style.display = "none";
+                $("bookForm").style.display = "none";
                 $("clear").style.display = "inline";
-                $("displayLink").style.display = "none";
+                $("display").style.display = "none";
                 $("addNew").style.display = "inline";
                 break;
             case "off":
-                $("form").style.display = "block";
+                $("bookForm").style.display = "block";
                 $("clear").style.display = "inline";
                 $("addNew").style.display = "none";
-                $("items").style.display = "none";
+                $("item").style.display = "none";
                 break;
             default:
                 return false;
         }
     }
 
-
+    // Store Data
     function storeData() {
         var id = Math.floor(Math.random()*100000001);
-        // Gather up all our form field values and store in an object.
-        // Object properties contain an arry with the form label and input values
         getSelectedRadio();
         getCheckboxValue();
+        // Gather up all the form field values and store in an object.
+        // Object properties contain an array with the form label and input values
         var item = {};
-        item.grouping = ["Group:", $('select').value];
-        item.titles = ["Title:", $('booktitle').value];
-        item.authors = ["Author:", $('author').value];
-        item.readpages = ["Pages:", $('pages').value];
-        item.datefinished = ["Date Finished:", $('readdate').value];
-        item.rating = ["Rating:", $('rateit').value];
-        item.category = ["Genre:", genreValue];
-        item.favs = ["Favorite:", favoriteValue];
-        item.note = ["Notes:", $('notes').value];
-        // Save data into Local Storage: Use Stringify to convert our object to a string.
+        item.groups = ['Group:', $('groups').value];
+        item.titles = ['Title:', $('booktitle').value];
+        item.authors = ['Author:', $('author').value];
+        item.readpages = ['Pages:', $('pages').value];
+        item.datefinished = ['Date Finished:', $('date').value];
+        item.rating = ['Rating:', $('rating').value];
+        item.category = ['Genre:', genreValue];
+        item.favs = ['Favorite:', favoriteValue];
+        item.note = ['Notes:', $('notes').value];
         localStorage.setItem(id, JSON.stringify(item));
-        alert("Book is saved!");
+        // Data is saved into Local Storage; Using 'Stringify' to convert the object into a string
+        alert('Book is saved!');
     }
 
-    function showData() {
-        toggleControls("on");
+    // Show Data
+    function showData () {
+        toggleControls('on');
         if (localStorage.length === 0) {
-            alert("No saved books!");
+            alert('No saved books');
         } else {
-        var makeDiv = document.createElement('div');
-        makeDiv.setAttribute('id','items');
-        var makeList = document.createElement('ul');
-        makeDiv.appendChild(makeList);
-        document.body.appendChild(makeDiv);
-        $('item').style.display = 'display';
-        for (var i=0, l = localStorage.length; i<l; i++) {
-            var makeLi = document.createElement('li');
-            makeList.appendChild(makeLi);
-            var key = localStorage.key(i);
-            var value = localStorage.getItem(key);
-            var obj = JSON.parse(value);
-            var makeSubList = document.createElement('ul');
-            makeLi.appendChild(makeSubList);
-            for (var n in obj) {
-                var makeSubLi = document.createElement("li");
-                makeSubList.appendChild(makeSubLi);
-                var optSubText = obj[n][0]+" "+obj[n][1];
-                makeSubLi.innerHTML = optSubText;
+            // Write data from Local Storage to browser
+            // Below 4 lines create a container (div & ul) for writing our data to
+            var makeDiv = document.createElement('div');
+            makeDiv.setAttribute('id', 'items');
+            var makeList = document.createElement('ul');
+            makeDiv.appendChild(makeList);
+            document.body.appendChild(makeDiv);
+            // Below for-loop looks in Local Storage for data
+            for (var i=0, l=localStorage.length; i < l; i++) {
+                var makeLi = document.createElement('li');
+                makeList.appendChild(makeLi);
+                var key = localStorage.key(i);
+                var value = localStorage.getItem(key);
+                // Below variable converts the string from Local Storage back into an object
+                var obj = JSON.parse(value);
+                // Below variable and for-loop creates a sub-list and appends to the above list (li)
+                var makeSubList = document.createElement('ul');
+                makeLi.appendChild(makeSubList);
+                for (var n in obj) {
+                    var makeSubLi = document.createElement('li');
+                    makeSubList.appendChild(makeSubLi);
+                    var optSubText = obj[n][0]+" "+obj[n][1];
+                    makeSubLi.innerHTML = optSubText;
+                }
             }
         }
-        }
     }
 
+    // Clear Data
     function clearData() {
         if(localStorage.length === 0) {
             alert("No books to clear!");
@@ -130,18 +138,19 @@ window.addEventListener('DOMContentLoaded', function() {
     }
     
     // Variable defaults
-    var bookGroups = ["--Choose a Source--", "Book", "EReader", "Tablet", "Online"],
+    var 
+    bookGroups = ["--Choose a Source--", "Book", "EReader", "Tablet", "Online"],
     genreValue,
     favoriteValue = "No"
     ;
+
     makeCats();
 
     var saveBook = $('submit');
     saveBook.addEventListener('click', storeData);
-    var displayBooks = $("display");
-    displayBooks.addEventListener("click", showData);
-    var clearBooks = $("clear");
-    clearBooks.addEventListener("click", clearData);
+    var displayBooks = $('display');
+    displayBooks.addEventListener('click', showData);
+    var clearBooks = $('clear');
+    clearBooks.addEventListener('click', clearData);
     
-
 } );

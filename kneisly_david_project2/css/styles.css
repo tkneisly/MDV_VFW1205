@@ -1,104 +1,163 @@
-/* 
-Week 2, Project 2 
-David Tyler Kneisly 
-VFW 1205
-Book Tracker
-*/
+/** 
+ * Week 2, Project 2 
+ * David Tyler Kneisly 
+ * VFW 1205
+ * Book Tracker
+ */
 
 body {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     margin: auto;
-    padding: 10px;
     overflow: scroll;
-    background-color: rgba(0,0,0,0.3);
+    background-color: #808080;
 }
-
 header {
     display: block;
     position: relative;
-    padding: 8px 0px 20px 0px;
+    padding: 8px 0px 8px 0px;
     width: 100%;
-    background: -webkit-linear-gradient(top, #ebedeb, #d3d3d4 10%, #d3d3d4, #b0b1b0 90%, #9a9b9a);
+    background: -webkit-linear-gradient(top, #d3d3d4, #d3d3d4 10%, #d3d3d4, #b0b1b0 90%, #9a9b9a);
 }
-
-nav {
-    position: relative;
-    background-color: #DDD;
-    text-align: center;
-    text-transform: lowercase;
-    letter-spacing: 1px;
-    line-height: 30px;
-    border-radius: 6px;
-    border: 1px solid #dcdcdc;
-    display: inline;
-    color: #777777;
-    font-family: arial;
-    font-size: 15px;
-    font-weight: bold;
-    padding: 6px 24px;
-    text-decoration: none;
-    text-shadow: 1px 1px 0px #ffffff;
-    padding: 5px 10px 5px 10px;
-}
-
-footer {
-    display:block;
-}
-
-div#items {
-    font-family: Verdana;
-    font-weight: normal;
-    text-transform: lowercase;
-}
-
-a {
-    outline: none;
-    color: black;
-}
-
-a:hover {
-    outline: none;
-    color: blue;
-}
-
 h1 {
     position: relative;
-    font-family: "Helvetica";
-    font-size: 24px;
-    margin: 0px;
-    padding: 5px;
+    font-family: Helvetica;
+    font-size: 21px;
+    margin: 10px;
+    padding: 0px;
     color: #2a2a2a;
     width: 95%;
     text-align: center;
     text-shadow: 1px 1px 1px #dfdfdf;
-    text-align: center;
 }
-
-p {
-    word-wrap;
-}
-
-ul, li {
+nav {
     display: block;
-}
-
-label {
-    display: inline;
-}
-
-form {
-    border: 5px none #999;
-    line-height: 22px;
-}
-
-legend {
+    position: relative;
+    margin: 5px 5px 5px 5px;
+    padding: 5px 0px 5px 10px;
+    background-color: #ff8e33;
+    line-height: 30px;
+    border-radius: 6px;
+    color: #777777;
+    font-family: arial;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
     text-align: center;
+    text-decoration: none;
+    text-transform: lowercase;
+}
+a {
+    outline: none;
+    color: black;
+}
+a:hover {
+    outline: none;
+    color: black;
+}
+#clear {
+    margin: 0 0 0 -10px;
+}
+#display {
+    margin: 0 0 0 10px;
+}
+#addNew {
+    margin: 0 0 0 10px;
+}
+form {
+    position: relative;
+    margin: 0 5px 0 5px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px 10px 5px 10px;
+    background-color: #DDD;
+}
+fieldset {
+    margin: 0 0 0 -15px;
+    letter-spacing: 1px;
+    line-height: 30px;
+    border: none;
+    color: #777777;
+    font-family: arial;
+    font-size: 15px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #ffffff;
+    line-height: 22px;
+    list-style-type: none;
+}
+legend {
+    margin: 0 0 0 5px;
+    color: #2a2a2a;
+    text-align: left;
     font-size: 18px;
     font-weight: 3px;
 }
-
-fieldset {
+.book_form label {
+    width:195px;
+    margin-top: 6px;
+    display: inline-block;
+    padding: 3px;
+}
+.book_form input {
+    height: 20px;
+    width: 195px;
+    padding: 5px 8px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    box-shadow: 0 0 3px #ccc, 0 10px 15px #eee inset;
+    display: inline;
+    vertical-align: text-top;
+}
+.book_form textarea {
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    width: 195px;
+    box-shadow: 0 0 3px #ccc, 0 10px 15px #eee inset;*/
+    vertical-align: bottom;
+    /* Source for box-shadow style: http://webdesign.tutsplus.com/tutorials/site-elements/bring-your-forms-up-to-date-with-css3-and-html5-validation/  */
+    /* Box-shadow style only visible in desktop browsers.*/
+}
+.book_form input:focus,
+.book_form textarea:focus {
+    background: #fff;
+    border: 1px solid #555;
+    box-shadow: 0 0 3px #aaa inset;
+}
+.checkbox label{
+    display: inline;
+}
+.checkbox input{
+    width: 10px;
+    vertical-align: bottom;
+}
+ul,
+li,
+label { 
     display: block;
+    /*vertical-align: top;*/
+}
+div#items {
+    display: inline-block;
+    border-radius: 6px;
     border: none;
+    letter-spacing: 1px;
+    line-height: 30px;
+    margin: 0 5px 0 5px;
+    color: black;
     background-color: #DDD;
+    font-family: arial;
+    font-size: 12px;
+    text-shadow: 1px 1px 0 #ffffff;
+    line-height: 22px;
+    list-style-type: none;
+}
+div#items:first-child {
+    margin: 15px;
+}
+#submit {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    width: 195px;
+    height: 30px;
 }
