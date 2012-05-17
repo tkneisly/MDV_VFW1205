@@ -134,7 +134,7 @@ li,
 label { 
     display: block;
 }
-#items ul {
+#items ul{
     display: inline-block;
     border-radius: 6px;
     border: none;
