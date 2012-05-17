@@ -62,7 +62,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				$('bookForm').style.display = "block";
 				$('clear').style.display = "inline";
 				$('addNew').style.display = "none";
-				$('item').style.display = "none";
+				// $('item').style.display = "none";
 				break;
 			default:
 				return false;
@@ -107,6 +107,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			// Below for-loop looks in Local Storage for data
 			for (var i=0, l=localStorage.length; i < l; i++) {
 				var makeLi = document.createElement('li');
+				var linksLi = document.createElement('li');
 				makeList.appendChild(makeLi);
 				var key = localStorage.key(i);
 				var value = localStorage.getItem(key);
@@ -120,9 +121,75 @@ window.addEventListener('DOMContentLoaded', function() {
 					makeSubList.appendChild(makeSubLi);
 					var optSubText = obj[n][0]+" "+obj[n][1];
 					makeSubLi.innerHTML = optSubText;
+					makeSubList.appendChild(linksLi);
 				}
+				// Below function creates Edit and Delete buttons
+				makeItemLinks(localStorage.key(i), linksLi);
 			}
 		}
+	}
+
+	// Make Item Links
+	// Creates the edit and delete links for each stored item displayed.
+	function makeItemLinks(key, linksLi) {
+		// Create the Edit link. Receives 'key' from showData function.
+		var editLink = document.createElement('a');
+		editLink.href = "#";
+		editLink.key = key;
+		var editText = "Edit Book";
+		editLink.addEventListener('click', editItem);
+		editLink.innerHTML = editText;
+		linksLi.appendChild(editLink);
+
+		// Adds a line break between ahrefs
+		var breakTag = document.createElement('br');
+		linksLi.appendChild(breakTag);
+
+		// Create the Delete link.  Receives 'key' from showData function.
+		var deleteLink = document.createElement('a');
+		deleteLink.href = "#";
+		deleteLink.key = key;
+		var deleteText = "Delete Book";
+		// deleteLink.addEventListener('click', deleteItem);
+		deleteLink.innerHTML = deleteText;
+		linksLi.appendChild(deleteLink);
+	}
+
+	function editItem() {
+		// Get data from item from Local Storage
+		var value = localStorage.getItem(this.key);
+		var item = JSON.parse(value);
+
+		// Show the form
+		toggleControls('off');
+
+		// Populate the form fields with current localStorage values.
+		$('groups').value = item.groups[1];
+		$('booktitle').value = item.titles[1];
+		$('author').value = item.authors[1];
+		$('pages').value = item.readpages[1];
+		$('date').value = item.datefinished[1];
+		$('rating').value = item.rating[1]; 
+		var radios = document.forms[0].genre;
+		for (var i=0; i < radios.length; i++) {
+			if (radios[i].value == "Science-Fiction" && item.category[1] == "Science-Fiction") {
+				radios[i].setAttribute('checked', 'checked');
+			} else if (radios[i].value == "Fantasy" && item.category[1] == "Fantasy") {
+				radios[i].setAttribute('checked', 'checked');
+			} else if (radios[i].value == "Thriller" && item.category[1] == "Thriller") {
+				radios[i].setAttribute('checked', 'checked');
+			} else if (radios[i].value == "Classic" && item.category[1] == "Classic") {
+				radios[i].setAttribute('checked', 'checked');
+			} else if (radios[i].value == "Periodical" && item.category[1] == "Periodical") {
+				radios[i].setAttribute('checked', 'checked');
+			} else if (radios[i].value == "Non-Fiction" && item.category[1] == "Non-Fiction") {
+				radios[i].setAttribute('checked', 'checked');
+			}
+		}
+		if (item.favs[1] == "Yes") {
+			$('favorite').setAttribute('checked', 'checked');
+		}
+		$('notes').value = item.note[1];
 	}
 
 	// Clear Data
