@@ -70,7 +70,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	}
 
 	// Store Data
-	function storeData() {
+	function storeData(key) {
 		var id = Math.floor(Math.random()*100000001);
 		getSelectedRadio();
 		getCheckboxValue();
@@ -195,7 +195,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		// Remove the initial listener from the input 'Save Book'
 		saveBook.removeEventListener('click', storeData);
 		// Change the submit button value to say 'Edit
-		$('submit').value = "Edit Contact";
+		$('submit').value = "Save Edits";
 		var editSubmit = $('submit');
 		// Save the key value as a property of the editSubmit event
 		editSubmit.addEventListener('click', validate);
@@ -214,20 +214,87 @@ window.addEventListener('DOMContentLoaded', function() {
 		}
 	}
 
+	function validate(e) {
+		// Define the elements to be checked
+		var getGroup = $('groups');
+		var getTitle = $('booktitle');
+		var getAuthor = $('author');
+		var getPages = $('pages');
+		var getDate = $('date');
+
+		// Reset the Error Mesages
+		errMsg.innerHTML = "";
+		getGroup.style.border = "1px solid black";
+		getTitle.style.border = "1px solid black";
+		getAuthor.style.border = "1px solid black";
+		getPages.style.border = "1px solid black";
+		getDate.style.border = "1px solid black";
+
+		// Get error messages
+		var messageAry = [];
+		// Group Validation
+		if(getGroup.value === "--Choose a Source--") {
+			var groupError = "Please choose a source.";
+			getGroup.style.border = "1px solid red";
+			messageAry.push(groupError);
+		}
+		// Title Validation (RegExp)
+		if(getTitle.value === "") {
+			var titleError = "Please enter a book title.";
+			getTitle.style.border = "1px solid red";
+			messageAry.push(titleError);
+		}
+		// Author Validation
+		if(getAuthor.value === "") {
+			var authorError = "Please enter an author's name.";
+			getAuthor.style.border = "1px solid red";
+			messageAry.push(authorError);
+		}
+		// Pages Validation
+		if(getPages.value === "") {
+			var pagesError = "Please provide the number of pages read.";
+			getPages.style.border = "1px solid red";
+			messageAry.push(pagesError);
+		}
+		// Date Validation
+		// Validate using RegEx
+		var re = /^[12][09][\d][\d]-[01]?[\d]-[0-3]?[\d]$/;
+		if(!(re.exec(getDate.value))) {
+			var dateError = "Please enter a valid date.";
+			getDate.style.border = "1px solid red";
+			messageAry.push(dateError);
+		}
+		// If there are errors, display error messages
+		if(messageAry.length >= 1) {
+			for(var i=0, j=messageAry.length; i < j; i++) {
+				var txt = document.createElement('li');
+				txt.innerHTML = messageAry[i];
+				errMsg.appendChild(txt);
+			}
+			e.preventDefault();
+			return false;
+		} else {
+			// Save data if all the above if conditions are ok
+			storeData();
+		}
+	}
+
 	// Defaults for Variables
 	var 
-	bookGroups = ["--Choose a Platform--", "Book", "EReader", "Tablet", "Online"],
+	bookGroups = ["--Choose a Source--", "Book", "EReader", "Tablet", "Online"],
 	genreValue,
-	favoriteValue = "No"
+	favoriteValue = "No",
+	errMsg = $('errors')
 	;
 	
 	makeCats();
 
-	var saveBook = $('submit');
-	saveBook.addEventListener('click', storeData);
 	var displayBooks = $('display');
 	displayBooks.addEventListener('click', showData);
 	var clearBooks = $('clear');
 	clearBooks.addEventListener('click', clearData);
-	
+	// The saveBook variable now it instructs the validate function to be triggered first.
+	var saveBook = $('submit');
+	saveBook.addEventListener('click', validate);
+
 });
