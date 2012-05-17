@@ -72,10 +72,12 @@ window.addEventListener('DOMContentLoaded', function() {
 	// Store Data
 	function storeData(key) {
 		// Only generate a new key if it is a new item.
-		// If the item is being edited, do not create a new key
+		// If there is no key, this is a new item and needs a new key
 		if(!key) {
 			var id = Math.floor(Math.random()*100000001);
 		} else {
+			// Set the id to the existing key if the item is being edited
+			// From here, key is passed to the validate function, then into storeData
 			id = key;
 		}
 		getSelectedRadio();
@@ -102,6 +104,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		toggleControls('on');
 		if (localStorage.length === 0) {
 			alert('No saved books');
+			window.location.reload();
 		} else {
 			// Write data from Local Storage to browser
 			// The next 4 lines create a container (div & ul) for writing data to
@@ -156,7 +159,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		deleteLink.href = "#";
 		deleteLink.key = key;
 		var deleteText = "Delete Book";
-		// deleteLink.addEventListener('click', deleteItem);
+		deleteLink.addEventListener('click', deleteItem);
 		deleteLink.innerHTML = deleteText;
 		linksLi.appendChild(deleteLink);
 	}
@@ -208,10 +211,23 @@ window.addEventListener('DOMContentLoaded', function() {
 		editSubmit.key = this.key;
 	}
 
+	// Delete Item
+	function deleteItem() {
+		var ask = confirm("Are you sure you want to delete?");
+		if(ask) {
+			localStorage.removeItem(this.key);
+			alert("Deleted!");
+			window.location.reload();
+		} else {
+			alert("The book is still saved!");
+		}
+	}
+
 	// Clear Data
 	function clearData() {
 		if(localStorage.length === 0) {
 			alert('No books to clear');
+			window.location.reload();
 		} else {
 			localStorage.clear();
 			alert('All books deleted');
