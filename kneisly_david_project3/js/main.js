@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	function makeCats () {
 		var formTag = document.getElementsByTagName('form'),
 		// This will become an array of all the form tags in the additem.html doc.
-		selectLi = $('select');
+		selectLi = $('select'),
 		makeSelect = document.createElement('select');
 		makeSelect.setAttribute('id', 'groups');
 		for (var i=0, j=bookGroups.length; i < j; i++) {
@@ -53,16 +53,16 @@ window.addEventListener('DOMContentLoaded', function() {
 	function toggleControls(n) {
 		switch(n) {
 			case 'on':
-				$('bookForm').style.display = 'none';
-				$('clear').style.display = 'inline';
-				$('display').style.display = 'none';
-				$('addNew').style.display = 'inline';
+				$('bookForm').style.display = "none";
+				$('clear').style.display = "inline";
+				$('display').style.display = "none";
+				$('addNew').style.display = "inline";
 				break;
 			case 'off':
-				$('bookForm').style.display = 'block';
-				$('clear').style.display = 'inline';
-				$('addNew').style.display = 'none';
-				$('item').style.display = 'none';
+				$('bookForm').style.display = "block";
+				$('clear').style.display = "inline";
+				$('addNew').style.display = "none";
+				$('item').style.display = "none";
 				break;
 			default:
 				return false;
@@ -106,7 +106,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			document.body.appendChild(makeDiv);
 			// Below for-loop looks in Local Storage for data
 			for (var i=0, l=localStorage.length; i < l; i++) {
-				var makeLi = localStorage.key(i);
+				var makeLi = document.createElement('li');
 				makeList.appendChild(makeLi);
 				var key = localStorage.key(i);
 				var value = localStorage.getItem(key);

@@ -133,15 +133,16 @@ ul,
 li,
 label { 
     display: block;
-    /*vertical-align: top;*/
 }
-div#items {
+#items ul {
     display: inline-block;
     border-radius: 6px;
     border: none;
     letter-spacing: 1px;
+    word-wrap: normal;
     line-height: 30px;
-    margin: 0 5px 0 5px;
+    margin: 0px 5px 10px 5px;
+    padding: 10px;
     color: black;
     background-color: #DDD;
     font-family: arial;
@@ -149,9 +150,6 @@ div#items {
     text-shadow: 1px 1px 0 #ffffff;
     line-height: 22px;
     list-style-type: none;
-}
-div#items:first-child {
-    margin: 15px;
 }
 #submit {
     display: block;
