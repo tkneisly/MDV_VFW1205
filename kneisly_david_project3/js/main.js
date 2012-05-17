@@ -71,7 +71,13 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	// Store Data
 	function storeData(key) {
-		var id = Math.floor(Math.random()*100000001);
+		// Only generate a new key if it is a new item.
+		// If the item is being edited, do not create a new key
+		if(!key) {
+			var id = Math.floor(Math.random()*100000001);
+		} else {
+			id = key;
+		}
 		getSelectedRadio();
 		getCheckboxValue();
 		// Gather up all the form field values and store in an object.
@@ -275,7 +281,10 @@ window.addEventListener('DOMContentLoaded', function() {
 			return false;
 		} else {
 			// Save data if all the above if conditions are ok
-			storeData();
+			// As local storage is being looped through, the key is saved as a property to a variable
+			// The current loop's iteration of the key property is passed here.
+			// Send the key value back to local storage
+			storeData(this.key);
 		}
 	}
 
