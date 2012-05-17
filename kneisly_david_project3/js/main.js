@@ -62,7 +62,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				$('bookForm').style.display = "block";
 				$('clear').style.display = "inline";
 				$('addNew').style.display = "none";
-				// $('item').style.display = "none";
+				$('items').style.display = "none";
 				break;
 			default:
 				return false;
@@ -155,6 +155,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		linksLi.appendChild(deleteLink);
 	}
 
+	// Edit a Single Item
 	function editItem() {
 		// Get data from item from Local Storage
 		var value = localStorage.getItem(this.key);
@@ -190,6 +191,15 @@ window.addEventListener('DOMContentLoaded', function() {
 			$('favorite').setAttribute('checked', 'checked');
 		}
 		$('notes').value = item.note[1];
+
+		// Remove the initial listener from the input 'Save Book'
+		saveBook.removeEventListener('click', storeData);
+		// Change the submit button value to say 'Edit
+		$('submit').value = "Edit Contact";
+		var editSubmit = $('submit');
+		// Save the key value as a property of the editSubmit event
+		editSubmit.addEventListener('click', validate);
+		editSubmit.key = this.key;
 	}
 
 	// Clear Data
