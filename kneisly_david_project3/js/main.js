@@ -136,7 +136,6 @@ window.addEventListener('DOMContentLoaded', function() {
 				// Below function creates Edit and Delete buttons
 				makeItemLinks(localStorage.key(i), linksLi);
 			}
-			// scroll(0,0);
 		}
 	}
 
@@ -233,9 +232,9 @@ window.addEventListener('DOMContentLoaded', function() {
 		} else {
 			var ask = confirm("Are you sure you want to clear all data?");
 			if(ask) {
-				localStorage.clear();
 				alert('All books deleted');
 				window.location.reload();
+				localStorage.clear();
 				return false;
 			} else {
 				alert("Your books are still saved!");

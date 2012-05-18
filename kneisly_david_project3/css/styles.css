@@ -154,6 +154,21 @@ ul,
 li { 
     display: block;
 }
+div#index {
+    position: relative;
+    margin: 8px 5px 0 5px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px 10px 5px 10px;
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0,#dfe1e5), color-stop(1, #ebedf2) );
+    background: -moz-linear-gradient( center bottom, #dfe1e5 0%, #ebedf2 100% );
+    border: 1px solid #fff;
+    -moz-box-shadow: 0 0 1em rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 0 1em rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1em rgba(0, 0, 0, .5);
+    opacity: .95;
+    text-align: center;
+}
 div#items {
     position: relative;
     display: block;
