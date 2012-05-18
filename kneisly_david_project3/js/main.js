@@ -101,11 +101,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	// Show Data
 	function showData () {
-		toggleControls('on');
 		if (localStorage.length === 0) {
 			alert('No saved books');
-			window.location.reload();
+			toggleControls('off');
 		} else {
+			// Moved toggleControls to the 'else' statement to avoid disabling the form if there are no saved books to display
+			toggleControls('on');
 			// Write data from Local Storage to browser
 			// The next 4 lines create a container (div & ul) for writing data to
 			var makeDiv = document.createElement('div');
@@ -135,6 +136,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				// Below function creates Edit and Delete buttons
 				makeItemLinks(localStorage.key(i), linksLi);
 			}
+			// scroll(0,0);
 		}
 	}
 
@@ -227,12 +229,17 @@ window.addEventListener('DOMContentLoaded', function() {
 	function clearData() {
 		if(localStorage.length === 0) {
 			alert('No books to clear');
-			window.location.reload();
+			scrollTo(0,0);
 		} else {
-			localStorage.clear();
-			alert('All books deleted');
-			window.location.reload();
-			return false;
+			var ask = confirm("Are you sure you want to clear all data?");
+			if(ask) {
+				localStorage.clear();
+				alert('All books deleted');
+				window.location.reload();
+				return false;
+			} else {
+				alert("Your books are still saved!");
+			}			
 		}
 	}
 
@@ -243,6 +250,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		var getAuthor = $('author');
 		var getPages = $('pages');
 		var getDate = $('date');
+		var errorBox = $('errors');
 
 		// Reset the Error Mesages
 		errMsg.innerHTML = "";
@@ -251,31 +259,36 @@ window.addEventListener('DOMContentLoaded', function() {
 		getAuthor.style.border = "1px solid black";
 		getPages.style.border = "1px solid black";
 		getDate.style.border = "1px solid black";
+		errorBox.style.border = "1px solid #aaa";
 
 		// Get error messages
 		var messageAry = [];
 		// Group Validation
 		if(getGroup.value === "--Choose a Source--") {
 			var groupError = "Please choose a source.";
-			getGroup.style.border = "1px solid red";
+			getGroup.style.border = "1px solid #ff8e33";
+			errorBox.style.border = "1px solid #ff8e33";
 			messageAry.push(groupError);
 		}
 		// Title Validation (RegExp)
 		if(getTitle.value === "") {
 			var titleError = "Please enter a book title.";
-			getTitle.style.border = "1px solid red";
+			getTitle.style.border = "1px solid #ff8e33";
+			errorBox.style.border = "1px solid #ff8e33";
 			messageAry.push(titleError);
 		}
 		// Author Validation
 		if(getAuthor.value === "") {
 			var authorError = "Please enter an author's name.";
-			getAuthor.style.border = "1px solid red";
+			getAuthor.style.border = "1px solid #ff8e33";
+			errorBox.style.border = "1px solid #ff8e33";
 			messageAry.push(authorError);
 		}
 		// Pages Validation
 		if(getPages.value === "") {
-			var pagesError = "Please provide the number of pages read.";
-			getPages.style.border = "1px solid red";
+			var pagesError = "Please enter the # of pages.";
+			getPages.style.border = "1px solid #ff8e33";
+			errorBox.style.border = "1px solid #ff8e33";
 			messageAry.push(pagesError);
 		}
 		// Date Validation
@@ -283,7 +296,8 @@ window.addEventListener('DOMContentLoaded', function() {
 		var re = /^[12][09][\d][\d]-[01]?[\d]-[0-3]?[\d]$/;
 		if(!(re.exec(getDate.value))) {
 			var dateError = "Please enter a valid date.";
-			getDate.style.border = "1px solid red";
+			getDate.style.border = "1px solid #ff8e33";
+			errorBox.style.border = "1px solid #ff8e33";
 			messageAry.push(dateError);
 		}
 		// If there are errors, display error messages
@@ -293,6 +307,8 @@ window.addEventListener('DOMContentLoaded', function() {
 				txt.innerHTML = messageAry[i];
 				errMsg.appendChild(txt);
 			}
+			alert("Please fill in the required fields.");
+			scroll(0,0);
 			e.preventDefault();
 			return false;
 		} else {
@@ -301,6 +317,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			// The current loop's iteration of the key property is passed here.
 			// Send the key value back to local storage
 			storeData(this.key);
+			// scroll(0,0);
 		}
 	}
 
@@ -321,5 +338,16 @@ window.addEventListener('DOMContentLoaded', function() {
 	// The saveBook variable now it instructs the validate function to be triggered first.
 	var saveBook = $('submit');
 	saveBook.addEventListener('click', validate);
+	// Hides the address bar when page loads.
+	var hideAddress = window.scrollTo(0,0);
+	window.addEventListener('load', hideAddress);
 
+	// var hideAddress =
+
+	// {% if is_mobile % }
+ //  		// Hides mobile browser's address bar when page is done loading.
+ //  		window.addEventListener('load', function(e) {
+ //    		setTimeout(function() { window.scrollTo(0, 1); }, 1);
+ //  		}, false);
+	// 	{% endif % }
 });
