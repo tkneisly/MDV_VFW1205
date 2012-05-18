@@ -1,4 +1,4 @@
-// Week 3, Project 3
+// Week 4, Project 4
 // David Tyler Kneisly
 // VFW 1205
 // Book Tracker
@@ -290,8 +290,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			errorBox.style.border = "1px solid #ff8e33";
 			messageAry.push(pagesError);
 		}
-		// Date Validation
-		// Validate using RegEx
+		// Date Validation using RegEx
 		var re = /^[12][09][\d][\d]-[01]?[\d]-[0-3]?[\d]$/;
 		if(!(re.exec(getDate.value))) {
 			var dateError = "Please enter a valid date.";
@@ -299,7 +298,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			errorBox.style.border = "1px solid #ff8e33";
 			messageAry.push(dateError);
 		}
-		// If there are errors, display error messages
+		// If there are errors, display messages
 		if(messageAry.length >= 1) {
 			for(var i=0, j=messageAry.length; i < j; i++) {
 				var txt = document.createElement('li');
@@ -316,7 +315,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			// The current loop's iteration of the key property is passed here.
 			// Send the key value back to local storage
 			storeData(this.key);
-			// scroll(0,0);
 		}
 	}
 
