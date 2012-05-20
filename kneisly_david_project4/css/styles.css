@@ -49,7 +49,6 @@ nav {
     color: #2a2a2a;
     font-family: arial;
     font-size: 11px;
-    font-weight: bold;
     letter-spacing: 1px;
     text-align: center;
     text-decoration: none;
@@ -58,6 +57,7 @@ nav {
 a {
     outline: none;
     color: black;
+    font-weight: bold;
 }
 a:hover {
     outline: none;

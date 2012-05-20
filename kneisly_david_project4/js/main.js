@@ -102,7 +102,8 @@ window.addEventListener('DOMContentLoaded', function() {
 	// Show Data
 	function showData () {
 		if (localStorage.length === 0) {
-			alert('No saved books');
+			alert('No saved books.  Default data was added.');
+			autoFillData();
 			toggleControls('off');
 		} else {
 			// Moved toggleControls to the 'else' statement to avoid disabling the form if there are no saved books to display
@@ -136,6 +137,16 @@ window.addEventListener('DOMContentLoaded', function() {
 				// Below function creates Edit and Delete buttons
 				makeItemLinks(localStorage.key(i), linksLi);
 			}
+		}
+	}
+
+	// Auto Populate Local Storage
+	function autoFillData() {
+		// The JSON Object data required is coming from json.js file.
+		// Below function stors JSON data into Local Storage.
+		for (var n in json) {
+			var id = Math.floor(Math.random()*100000001);
+			localStorage.setItem(id, JSON.stringify(json[n]));
 		}
 	}
 
