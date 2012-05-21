@@ -127,6 +127,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				// Below variable and for-loop creates a sub-list and appends to the above list (li)
 				var makeSubList = document.createElement('ul');
 				makeLi.appendChild(makeSubList);
+				getImage(obj.groups[1], makeSubList);
 				for (var n in obj) {
 					var makeSubLi = document.createElement('li');
 					makeSubList.appendChild(makeSubLi);
@@ -138,6 +139,15 @@ window.addEventListener('DOMContentLoaded', function() {
 				makeItemLinks(localStorage.key(i), linksLi);
 			}
 		}
+	}
+
+	// Get image for the group/category being displayed
+	function getImage(catName, makeSubList) {
+		var imageLi = document.createElement('li');
+		makeSubList.appendChild(imageLi);
+		var newImg = document.createElement('img');
+		var setSrc = newImg.setAttribute('src', 'images/'+catName+'.png');
+		imageLi.appendChild(newImg);
 	}
 
 	// Auto Populate Local Storage
