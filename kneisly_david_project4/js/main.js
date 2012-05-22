@@ -217,6 +217,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			} else if (radios[i].value == "Non-Fiction" && item.category[1] == "Non-Fiction") {
 				radios[i].setAttribute('checked', 'checked');
 			}
+
 		}
 		if (item.favs[1] == "Yes") {
 			$('favorite').setAttribute('checked', 'checked');
@@ -343,12 +344,13 @@ window.addEventListener('DOMContentLoaded', function() {
 	var 
 	bookGroups = ["--Choose a Source--", "Book", "EReader", "Tablet", "Online"],
 	genreValue,
+	level,
 	favoriteValue = "No",
 	errMsg = $('errors')
 	;
 	
 	makeCats();
-
+	
 	var displayBooks = $('display');
 	displayBooks.addEventListener('click', showData);
 	var clearBooks = $('clear');
